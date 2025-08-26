@@ -1,0 +1,15 @@
+editor/table/save_info.json
+
+table/FloatingTextTemplate.json
+
+.idea
+.trigger_debugger
+.sce_workspace.code-workspace
+.vs
+bin
+GameEntry/Obj
+*.pdb
+AppBundle
+ui/AppBundle
+/GameEntry/Image/MyBird.png
+tmp/

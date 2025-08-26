@@ -1,0 +1,23 @@
+549.6039999723434:	{"globalClasses":["Array","Present","IEventNotify","Coroutine","Trigger","Item","Timer","Buff","Skill","Player","TriggerParamTable","TriggerEvent","UnitGroup","Actor","ScreenPos","Target","EffectParam","EffectParamShared","YPRRotation","DataCache","Camera","Slot","Vector","Region","Riseletter","Line","ThirdOrderMatrix","CollisionFlags","Unit","Point","RegionRect","RegionCircle"],"globalModules":["coroutine","_G","log","base"]}
+1841.5770999789238:	Loaded 0 plugins
+1842.4281999468803:	Parsing project settings
+1849.659500002861:	Transforming E:/NE/wasitestmap/ui/script/trigger_validator.ts
+1851.8477999567986:	moduleName:
+1851.8546999692917:	validator
+1852.3450999855995:	exportScope:
+1852.3502999544144:	true
+1929.106299996376:	Printing E:/NE/wasitestmap/ui/script/trigger_validator.ts
+1948.1494999527931:	Transforming E:/NE/wasitestmap/ui/script/trigger_module_main_1.ts
+1949.5726999640465:	moduleName:
+1949.5796999931335:	p_0tja
+1950.1180999875069:	exportScope:
+1950.124099969864:	true
+1950.7542999982834:	Printing E:/NE/wasitestmap/ui/script/trigger_module_main_1.ts
+1953.3302999734879:	Constructing emit plan
+1953.8288999795914:	Resolving dependencies for E:/NE/wasitestmap/ui/script/trigger_validator.ts
+1954.4926999807358:	Resolving dependencies for E:/NE/wasitestmap/ui/script/trigger_module_main_1.ts
+1955.2430999875069:	Emitting output
+1955.5945999622345:	Emitting E:/NE/wasitestmap/ui/script/trigger_validator.lua
+1956.7317999601364:	Emitting E:/NE/wasitestmap/ui/script/trigger_module_main_1.lua
+1959.8540999889374:	Emit finished!
+2039.296199977398:	ts2lua 执行时间：2007 毫秒

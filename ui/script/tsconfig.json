@@ -1,0 +1,41 @@
+{
+    "compilerOptions":{
+    "lib":[
+    "esnext"
+],
+    "moduleResolution":"node",
+    "noImplicitThis":false,
+    "strict":true,
+    "suppressImplicitAnyIndexErrors":true,
+    "target":"esnext",
+    "typeRoots":[
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/typescript_to_lua_node_modules/51/typescript_to_lua_node_modules//node_modules/@types",
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/maps/global_default/646/global_default/ui/script/"
+],
+    "types":[
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/typescript_to_lua_node_modules/51/typescript_to_lua_node_modules/node_modules/@typescript-to-lua/language-extensions",
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/maps/global_default/646/global_default/ui/script/",
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/maps/defaultui/547/defaultui/ui/script/",
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/maps/ai_templates/lib_common_ai/229/lib_common_ai/ui/script/",
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/maps/script_libs/lib_control/499/lib_control/ui/script/",
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/maps/script_libs/smallcard_get_items/275/smallcard_get_items/ui/script/",
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/maps/script_libs/smallcard_inventory/323/smallcard_inventory/ui/script/",
+    "E:/WasmSCE/Update/editor-master.spark.xd.com/Res/_m/maps/script_libs/smallcard_mail/168/smallcard_mail/ui/script/"
+]
+},
+    "files":[
+    "lua_declare.d.ts",
+    "trigger_validator.ts",
+    "trigger_module_main_1.ts"
+],
+    "tstl":{
+    "editorInfo":true,
+    "luaTarget":"5.3",
+    "noResolvePaths":[
+    "third-party.lua-pinyin",
+    "trigger.lua-generator",
+    "trigger.lua-parser.parser"
+],
+    "tstlVerbose":true
+}
+}

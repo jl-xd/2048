@@ -1,0 +1,23 @@
+3395.465399980545:	{"globalClasses":["Array","Present","IEventNotify","Coroutine","Actor","Team","Timer","Snapshot","EffectParamShared","TriggerParamTable","Item","Region","ScreenPos","Target","UnitTable","EffectParam","Point","Mover","Unit","Buff","HealInstance","TriggerEvent","DamageInstance","Slot","Skill","Inventory","Player","Trigger","Line","UnitGroup","Sight","DataCache","AISearcher","ScoreCommitter","ScoreObjData","ScoreGetParam","UserID","ScoreData","ScoreSetParam","ScoreAddParam","ScoreMoneyData","ScoreListAddParam","ScoreListModifyParam","ScoreListDeleteParam","ScoreListData","ScoreMsgSendParam","ScoreMsgQueryParam","ScoreNameNewParam","ScoreNameSearchParam","ScoreChannelMsgData","ScoreGetRankListParam","ScoreGetUserRankParam","ScoreGetRankListData","ScoreGetUserRankData","ScoreGetRankTotalData","ScoreGetRankTotalParam","ScoreMsgData","ScoreListID","ScoreID","ScoreNameData","ScoreMsgID","ScoreMoneyParam","os","DateTime","UnitBuff","autotest_log","ScoreRankSetParam","ScoreRankAddParam","UnitPropertyBonus","SceneObject","Quest","QuestCondition","crop","ScoreCropData","Vector","ScoreClearParam","ScoreAddWithLimitParam","ScoreListQueryByUuidParam","Response","MatchInfo","MatchTeamID","PlayerSCEID","ThirdOrderMatrix","CollisionFlags","Force","RegionRect","RegionCircle","Cast","ScoreAddWithHourLimitParam","ScoreAddWithDayLimitParam","ScoreAddWithWeekLimitParam","ScoreAddWithMonthLimitParam","ScoreAddWithYearLimitParam"],"globalModules":["coroutine","_G","log","base"]}
+6092.687600016594:	Loaded 0 plugins
+6093.569599986076:	Parsing project settings
+6122.474600017071:	Transforming E:/NE/wasitestmap/script/trigger_validator.ts
+6125.131200015545:	moduleName:
+6125.140799999237:	validator
+6125.764400005341:	exportScope:
+6125.769900023937:	true
+7028.813000023365:	Printing E:/NE/wasitestmap/script/trigger_validator.ts
+7198.653999984264:	Transforming E:/NE/wasitestmap/script/trigger_module_main_1.ts
+7211.798399984837:	moduleName:
+7211.8077999949455:	p_0tja
+7212.422399997711:	exportScope:
+7212.4273000359535:	true
+7216.462400019169:	Printing E:/NE/wasitestmap/script/trigger_module_main_1.ts
+7221.924300014973:	Constructing emit plan
+7222.6510999798775:	Resolving dependencies for E:/NE/wasitestmap/script/trigger_validator.ts
+7224.42919999361:	Resolving dependencies for E:/NE/wasitestmap/script/trigger_module_main_1.ts
+7225.0644000172615:	Emitting output
+7225.374700009823:	Emitting E:/NE/wasitestmap/script/trigger_validator.lua
+7227.7113000154495:	Emitting E:/NE/wasitestmap/script/trigger_module_main_1.lua
+7228.7146000266075:	Emit finished!
+8652.915300011635:	ts2lua 执行时间：8593 毫秒

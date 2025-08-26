@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lua",
+            "request": "launch",
+            "tag": "normal",
+            "name": "编辑器",
+            "description": "编辑器",
+            "cwd": "${workspaceFolder}",
+            "luaFileExtension": "lua",
+            "connectionPort": 8818,
+            "stopOnEntry": true,
+            "useCHook": true,
+            "autoPathMode": false,
+            "SCEType": "SCE"
+        },
+        {
+            "type": "lua",
+            "request": "launch",
+            "tag": "attach",
+            "name": "服务器",
+            "description": "服务器",
+            "cwd": "${workspaceFolder}",
+            "luaFileExtension": "lua",
+            "connectionPort": 8819,
+            "stopOnEntry": true,
+            "useCHook": true,
+            "autoPathMode": false,
+            "VSCodeAsClient": true,
+            "SCEType": "SCEHost"
+        },
+        {
+            "type": "lua",
+            "request": "launch",
+            "tag": "normal",
+            "name": "GAME-APPLICATION",
+            "description": "游戏-Application",
+            "cwd": "${workspaceFolder}",
+            "luaFileExtension": "lua",
+            "connectionPort": 8820,
+            "stopOnEntry": true,
+            "useCHook": true,
+            "autoPathMode": false,
+            "SCEType": "SCEGame-Application"
+        },
+        {
+            "type": "lua",
+            "request": "launch",
+            "tag": "normal",
+            "name": "游戏",
+            "description": "游戏",
+            "cwd": "${workspaceFolder}",
+            "luaFileExtension": "lua",
+            "connectionPort": 8821,
+            "stopOnEntry": true,
+            "useCHook": true,
+            "autoPathMode": false,
+            "SCEType": "SCEGame"
+        }
+    ]
+}

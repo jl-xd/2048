@@ -1,0 +1,20 @@
+{"messageText":"找不到名称“ScoreCommitter”。","code":2304,"start":5250,"length":14,"category":1}
+{"messageText":"命名空间“smallcard_get_items”没有已导出的成员“lobby_resource_instance”。","code":2694,"start":5323,"length":23,"category":1}
+{"messageText":"找不到名称“ScoreCommitter”。","code":2304,"start":5442,"length":14,"category":1}
+{"messageText":"命名空间“smallcard_get_items”没有已导出的成员“lobby_resource_instance”。","code":2694,"start":5515,"length":23,"category":1}
+{"messageText":{"messageText":"类型“_OBJ_lib_control_gui_ctrl_移动摇杆”中的属性“event”不可分配给基类型“_OBJ__gui_ctrl_gui_ctrl”中的同一属性。","category":1,"code":2416,"next":[{"messageText":"类型“_OBJ_lib_control_移动摇杆GUIEvent”缺少类型“_OBJ__GUIEvent”的以下属性: on_input, on_drop, on_double_click, on_dropped 及其他 12 项。","category":1,"code":2740}]},"code":2416,"start":10885,"length":5,"category":1}
+{"messageText":{"messageText":"类型“_OBJ_lib_control_gui_ctrl_技能摇杆”中的属性“event”不可分配给基类型“_OBJ__gui_ctrl_gui_ctrl”中的同一属性。","category":1,"code":2416,"next":[{"messageText":"类型“_OBJ_lib_control_技能摇杆GUIEvent”缺少类型“_OBJ__GUIEvent”的以下属性: on_input, on_drop, on_double_click, on_dropped 及其他 12 项。","category":1,"code":2740}]},"code":2416,"start":14685,"length":5,"category":1}
+{"messageText":{"messageText":"类型“_OBJ_lib_control_gui_ctrl_交互摇杆”中的属性“event”不可分配给基类型“_OBJ__gui_ctrl_gui_ctrl”中的同一属性。","category":1,"code":2416,"next":[{"messageText":"不能将类型“_OBJ_lib_control_技能摇杆GUIEvent”分配给类型“_OBJ__GUIEvent”。","category":1,"code":2322}]},"code":2416,"start":31013,"length":5,"category":1}
+{"messageText":{"messageText":"类型“_OBJ_lib_control_gui_ctrl_摇杆”中的属性“event”不可分配给基类型“_OBJ__gui_ctrl_gui_ctrl”中的同一属性。","category":1,"code":2416,"next":[{"messageText":"不能将类型“_OBJ_lib_control_移动摇杆GUIEvent”分配给类型“_OBJ__GUIEvent”。","category":1,"code":2322}]},"code":2416,"start":43559,"length":5,"category":1}
+{"messageText":"找不到名称“ScoreCommitter”。","code":2304,"start":102048,"length":14,"category":1}
+{"messageText":"命名空间“smallcard_get_items”没有已导出的成员“lobby_resource_instance”。","code":2694,"start":102121,"length":23,"category":1}
+{"messageText":"找不到名称“ScoreCommitter”。","code":2304,"start":102240,"length":14,"category":1}
+{"messageText":"命名空间“smallcard_get_items”没有已导出的成员“lobby_resource_instance”。","code":2694,"start":102313,"length":23,"category":1}
+{"messageText":"找不到名称“ScoreCommitter”。","code":2304,"start":103798,"length":14,"category":1}
+{"messageText":"命名空间“smallcard_get_items”没有已导出的成员“lobby_resource_instance”。","code":2694,"start":103871,"length":23,"category":1}
+{"messageText":"找不到名称“ScoreCommitter”。","code":2304,"start":103990,"length":14,"category":1}
+{"messageText":"命名空间“smallcard_get_items”没有已导出的成员“lobby_resource_instance”。","code":2694,"start":104063,"length":23,"category":1}
+{"messageText":"找不到名称“ScoreCommitter”。","code":2304,"start":105327,"length":14,"category":1}
+{"messageText":"命名空间“smallcard_get_items”没有已导出的成员“lobby_resource_instance”。","code":2694,"start":105400,"length":23,"category":1}
+{"messageText":"找不到名称“ScoreCommitter”。","code":2304,"start":105519,"length":14,"category":1}
+{"messageText":"命名空间“smallcard_get_items”没有已导出的成员“lobby_resource_instance”。","code":2694,"start":105592,"length":23,"category":1}

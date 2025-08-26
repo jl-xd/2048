@@ -1,0 +1,104 @@
+{
+    "ElementName":"Module",
+    "breakPointInfo":{
+    "disabled":false,
+    "hasBreakPoint":false,
+    "type":2
+},
+    "classes":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "custom_events":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "displayName":"我的地图",
+    "flags":{
+    "enableDisplayName":true,
+    "isDeclare":true
+},
+    "folder":{
+    "ElementName":"Folder",
+    "breakPointInfo":{
+    "disabled":false,
+    "hasBreakPoint":false,
+    "type":2
+},
+    "contents":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "displayName":"",
+    "flags":{
+},
+    "name":"p_0tja",
+    "staticWarningMsgs":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "tips":""
+},
+    "id":"ENV:client Module:{PROJECT_NAME}",
+    "keyword":"",
+    "methods":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "name":"p_0tja",
+    "packageName":"p_0tja",
+    "presets":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "rankOrder":0,
+    "s_or_c":"client",
+    "staticWarningMsgs":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "tips":"",
+    "triggers":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "type":{
+    "ElementName":"ModuleType",
+    "breakPointInfo":{
+    "disabled":false,
+    "hasBreakPoint":false,
+    "type":2
+},
+    "displayName":"",
+    "flags":{
+},
+    "source":{
+    "ElementName":"Source",
+    "targetUninit":{
+    "id":"ENV:client Module:{PROJECT_NAME}",
+    "packageName":"p_0tja",
+    "s_or_c":"client"
+}
+},
+    "staticWarningMsgs":{
+    "__TYPE":"Array",
+    "contents":{
+}
+},
+    "tips":""
+},
+    "v2_version":0.900000,
+    "variables":{
+    "__TYPE":"Array",
+    "contents":{
+}
+}
+}

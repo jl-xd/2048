@@ -1,0 +1,128 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	
+	<!-- Define WasiSparkCore path from environment variable, fallback to relative path -->
+	<PropertyGroup>
+		<WasiSparkCorePath Condition="'$(WASI_SPARK_CORE_PATH)' != ''">$(WASI_SPARK_CORE_PATH)/</WasiSparkCorePath>
+		<WasiSparkCorePath Condition="'$(WASI_SPARK_CORE_PATH)' == ''">../../WasiSparkCore/</WasiSparkCorePath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Configurations>Server-Debug;Server-Release;Client-Debug;Client-Release</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Server-Debug|AnyCPU'">
+		<DefineConstants>$(DefineConstants);SERVER;DEBUG</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Server-Release|AnyCPU'">
+		<Optimize>True</Optimize>
+		<DefineConstants>$(DefineConstants);SERVER;RELESE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Client-Debug|AnyCPU'">
+		<DefineConstants>$(DefineConstants);CLIENT;DEBUG</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Client-Release|AnyCPU'">
+		<Optimize>True</Optimize>
+		<DefineConstants>$(DefineConstants);CLIENT;RELESE</DefineConstants>
+	</PropertyGroup>
+
+	<!-- Analyzers -->
+	<ItemGroup>
+		<Analyzer Include="$(WasiSparkCorePath)EditorTools\CodeGenerator.dll" />
+		<Analyzer Include="$(WasiSparkCorePath)EditorTools\WasiCompatibilityAnalyzer.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="GameCore.BaseInterface" />
+		<Using Include="GameCore.BaseType" />
+		<Using Include="GameCore.PlayerAndUsers" />
+		<Using Include="GameCore.PlayerAndUsers.Data" />
+		<Using Include="GameCore.GameSystem" />
+		<Using Include="GameCore.EntitySystem" />
+		<Using Include="GameCore.EntitySystem.Data" />
+		<Using Include="GameCore.ItemSystem" />
+		<Using Include="GameCore.ItemSystem.Data" />
+		<Using Include="GameCore.Timers" />
+		<Using Include="GameCore.Extension" />
+		<Using Include="Microsoft.Extensions.Logging" />
+		<Using Include="System.Double">
+			<Alias>Fixed</Alias>
+		</Using>
+	</ItemGroup>
+	<ItemGroup
+		Condition=" '$(Configuration)' == 'Server-Debug' or '$(Configuration)' == 'Server-Release'">
+		<Reference Include="EngineCommon">
+			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/EngineCommon.dll</HintPath>
+		</Reference>
+		<Reference Include="EngineInterface">
+			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/EngineInterface.dll</HintPath>
+		</Reference>
+		<Reference Include="Events">
+			<HintPath>$(WasiSparkCorePath)server/official_server_deps_dll_package/AppBundle/managed/Events.dll</HintPath>
+		</Reference>
+		<Reference Include="GameCore">
+			<HintPath>$(WasiSparkCorePath)server/official_server_deps_dll_package/AppBundle/managed/GameCore.dll</HintPath>
+		</Reference>
+		<Reference Include="GameData">
+			<HintPath>$(WasiSparkCorePath)server/official_server_deps_dll_package/AppBundle/managed/GameData.dll</HintPath>
+		</Reference>
+		<Reference Include="GameUI">
+			<HintPath>$(WasiSparkCorePath)server/official_server_deps_dll_package/AppBundle/managed/GameUI.dll</HintPath>
+		</Reference>
+		<Reference Include="MessagePack">
+			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/MessagePack.dll</HintPath>
+		</Reference>
+		<Reference Include="MessagePack.Annotations">
+			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/MessagePack.Annotations.dll</HintPath>
+		</Reference>
+		<Reference Include="TriggerEncapsulation">
+			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/TriggerEncapsulation.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Extensions.Logging.Abstractions">
+			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+		</Reference>
+		<Reference Include="DotNext">
+			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/DotNext.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup
+		Condition=" '$(Configuration)' == 'Client-Debug' or '$(Configuration)' == 'Client-Release'">
+		<Reference Include="EngineCommon">
+			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/EngineCommon.dll</HintPath>
+		</Reference>
+		<Reference Include="EngineInterface">
+			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/EngineInterface.dll</HintPath>
+		</Reference>
+		<Reference Include="Events">
+			<HintPath>$(WasiSparkCorePath)client/official_client_deps_dll_package/ui/AppBundle/managed/Events.dll</HintPath>
+		</Reference>
+		<Reference Include="GameCore">
+			<HintPath>$(WasiSparkCorePath)client/official_client_deps_dll_package/ui/AppBundle/managed/GameCore.dll</HintPath>
+		</Reference>
+		<Reference Include="GameData">
+			<HintPath>$(WasiSparkCorePath)client/official_client_deps_dll_package/ui/AppBundle/managed/GameData.dll</HintPath>
+		</Reference>
+		<Reference Include="GameUI">
+			<HintPath>$(WasiSparkCorePath)client/official_client_deps_dll_package/ui/AppBundle/managed/GameUI.dll</HintPath>
+		</Reference>
+		<Reference Include="MessagePack">
+			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/MessagePack.dll</HintPath>
+		</Reference>
+		<Reference Include="MessagePack.Annotations">
+			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/MessagePack.Annotations.dll</HintPath>
+		</Reference>
+		<Reference Include="TriggerEncapsulation">
+			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/TriggerEncapsulation.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Extensions.Logging.Abstractions">
+			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+		</Reference>
+		<Reference Include="DotNext">
+			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/DotNext.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+</Project>
