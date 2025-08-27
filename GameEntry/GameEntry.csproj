@@ -4,6 +4,12 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<!-- 控制输出路径，不添加 TargetFramework 子目录 -->
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<!-- 不复制依赖项程序集到输出目录 -->
+		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+		<!-- 只复制项目输出，不复制引用的程序集 -->
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 	</PropertyGroup>
 	
 	<!-- Define WasiSparkCore path from environment variable, fallback to relative path -->
@@ -16,21 +22,29 @@
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Server-Debug|AnyCPU'">
 		<DefineConstants>$(DefineConstants);SERVER;DEBUG</DefineConstants>
+		<OutputPath>../AppBundle/managed/</OutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Server-Release|AnyCPU'">
 		<Optimize>True</Optimize>
 		<DefineConstants>$(DefineConstants);SERVER;RELESE</DefineConstants>
+		<OutputPath>../AppBundle/managed/</OutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Client-Debug|AnyCPU'">
 		<DefineConstants>$(DefineConstants);CLIENT;DEBUG</DefineConstants>
+		<OutputPath>../ui/AppBundle/managed/</OutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Client-Release|AnyCPU'">
 		<Optimize>True</Optimize>
 		<DefineConstants>$(DefineConstants);CLIENT;RELESE</DefineConstants>
+		<OutputPath>../ui/AppBundle/managed/</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup>
   		<WarningLevel>0</WarningLevel>
+		<!-- 抑制 MSBuild 警告 -->
+		<NoWarn>$(NoWarn);MSB3277</NoWarn>
+		<!-- 抑制所有程序集绑定警告 -->
+		<MSBuildWarningsAsMessages>MSB3277;MSB3243</MSBuildWarningsAsMessages>
 	</PropertyGroup>
 
 	<!-- Analyzers -->
@@ -60,72 +74,94 @@
 		Condition=" '$(Configuration)' == 'Server-Debug' or '$(Configuration)' == 'Server-Release'">
 		<Reference Include="EngineCommon">
 			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/EngineCommon.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="EngineInterface">
 			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/EngineInterface.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Events">
 			<HintPath>$(WasiSparkCorePath)server/official_server_deps_dll_package/AppBundle/managed/Events.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="GameCore">
 			<HintPath>$(WasiSparkCorePath)server/official_server_deps_dll_package/AppBundle/managed/GameCore.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="GameData">
 			<HintPath>$(WasiSparkCorePath)server/official_server_deps_dll_package/AppBundle/managed/GameData.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="GameUI">
 			<HintPath>$(WasiSparkCorePath)server/official_server_deps_dll_package/AppBundle/managed/GameUI.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="MessagePack">
 			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/MessagePack.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="MessagePack.Annotations">
 			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/MessagePack.Annotations.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="TriggerEncapsulation">
 			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/TriggerEncapsulation.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Microsoft.Extensions.Logging.Abstractions">
 			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="DotNext">
 			<HintPath>$(WasiSparkCorePath)server/AppBundle/managed/DotNext.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 	</ItemGroup>
 	<ItemGroup
 		Condition=" '$(Configuration)' == 'Client-Debug' or '$(Configuration)' == 'Client-Release'">
 		<Reference Include="EngineCommon">
 			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/EngineCommon.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="EngineInterface">
 			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/EngineInterface.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Events">
 			<HintPath>$(WasiSparkCorePath)client/official_client_deps_dll_package/ui/AppBundle/managed/Events.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="GameCore">
 			<HintPath>$(WasiSparkCorePath)client/official_client_deps_dll_package/ui/AppBundle/managed/GameCore.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="GameData">
 			<HintPath>$(WasiSparkCorePath)client/official_client_deps_dll_package/ui/AppBundle/managed/GameData.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="GameUI">
 			<HintPath>$(WasiSparkCorePath)client/official_client_deps_dll_package/ui/AppBundle/managed/GameUI.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="MessagePack">
 			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/MessagePack.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="MessagePack.Annotations">
 			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/MessagePack.Annotations.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="TriggerEncapsulation">
 			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/TriggerEncapsulation.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="Microsoft.Extensions.Logging.Abstractions">
 			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="DotNext">
 			<HintPath>$(WasiSparkCorePath)client/AppBundle/managed/DotNext.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 	</ItemGroup>
 

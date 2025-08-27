@@ -19,8 +19,8 @@ public class Game2048 : IGameClass, IThinker
 {
     // 游戏常量
     private const int GRID_SIZE = 4;
-    private const float TILE_SIZE = 100f;
-    private const float TILE_PADDING = 12f;
+    private const float TILE_SIZE = 130f;
+    private const float TILE_PADDING = 15f;
     private const float ANIMATION_SPEED = 8f;
     private const float MERGE_ANIMATION_SPEED = 12f;
 
@@ -57,10 +57,10 @@ public class Game2048 : IGameClass, IThinker
     private Trigger<EventGameKeyDown>? keyDownTrigger;
 
     // 游戏视觉参数
-    private float gameWidth = 600f;
-    private float gameHeight = 800f;
-    private float gridStartX = 50f;
-    private float gridStartY = 250f;
+    private float gameWidth = 800f;
+    private float gameHeight = 1000f;
+    private float gridStartX = 80f;
+    private float gridStartY = 280f;
 
     // 颜色主题 - 现代扁平化设计
     private readonly Dictionary<int, Color> tileColors = new()
@@ -166,7 +166,7 @@ public class Game2048 : IGameClass, IThinker
         // 计算游戏区域位置 - 确保居中且留足够空间给UI
         var gridTotalSize = GRID_SIZE * TILE_SIZE + (GRID_SIZE - 1) * TILE_PADDING;
         gridStartX = (gameWidth - gridTotalSize) / 2;
-        gridStartY = 250f; // 固定位置，为标题和分数留足空间
+        gridStartY = 280f; // 固定位置，为标题和分数留足空间
 
         CreateUI();
         SetupEventHandlers();
@@ -195,7 +195,7 @@ public class Game2048 : IGameClass, IThinker
         var titleLabel = new Label()
         {
             Text = "2048",
-            FontSize = 72,
+            FontSize = 84,
             TextColor = Color.FromArgb(255, 119, 110, 101),
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Top,
@@ -206,19 +206,19 @@ public class Game2048 : IGameClass, IThinker
         // 分数面板
         var scorePanel = new Panel()
         {
-            Width = 320,
-            Height = 80,
+            Width = 400,
+            Height = 90,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Top,
-            Margin = new Thickness(0, 130, 0, 0),
+            Margin = new Thickness(0, 150, 0, 0),
             Parent = gamePanel
         };
 
         // 当前分数
         var currentScorePanel = new Panel()
         {
-            Width = 150,
-            Height = 80,
+            Width = 190,
+            Height = 90,
             HorizontalAlignment = HorizontalAlignment.Left,
             Background = new SolidColorBrush(Color.FromArgb(255, 187, 173, 160)),
             Margin = new Thickness(0, 0, 10, 0),
@@ -228,7 +228,7 @@ public class Game2048 : IGameClass, IThinker
         scoreLabel = new Label()
         {
             Text = "0",
-            FontSize = 24,
+            FontSize = 28,
             TextColor = Color.White,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
@@ -239,7 +239,7 @@ public class Game2048 : IGameClass, IThinker
         var scoreTitle = new Label()
         {
             Text = "SCORE",
-            FontSize = 12,
+            FontSize = 16,
             TextColor = Color.FromArgb(255, 238, 228, 218),
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Top,
@@ -250,8 +250,8 @@ public class Game2048 : IGameClass, IThinker
         // 最高分数
         var bestScorePanel = new Panel()
         {
-            Width = 150,
-            Height = 80,
+            Width = 190,
+            Height = 90,
             HorizontalAlignment = HorizontalAlignment.Right,
             Background = new SolidColorBrush(Color.FromArgb(255, 187, 173, 160)),
             Parent = scorePanel
@@ -260,7 +260,7 @@ public class Game2048 : IGameClass, IThinker
         bestScoreLabel = new Label()
         {
             Text = "0",
-            FontSize = 24,
+            FontSize = 28,
             TextColor = Color.White,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
@@ -271,7 +271,7 @@ public class Game2048 : IGameClass, IThinker
         var bestTitle = new Label()
         {
             Text = "BEST",
-            FontSize = 12,
+            FontSize = 16,
             TextColor = Color.FromArgb(255, 238, 228, 218),
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Top,
@@ -282,19 +282,19 @@ public class Game2048 : IGameClass, IThinker
         // 按钮面板 - 放在游戏区域下方
         var buttonPanel = new Panel()
         {
-            Width = 320,
-            Height = 50,
+            Width = 400,
+            Height = 60,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Top,
-            Margin = new Thickness(0, 680, 0, 0), // 放在网格下方
+            Margin = new Thickness(0, 900, 0, 0), // 放在网格下方
             Parent = gamePanel
         };
 
         // 新游戏按钮
         newGameButton = new Button()
         {
-            Width = 140,
-            Height = 50,
+            Width = 160,
+            Height = 55,
             HorizontalAlignment = HorizontalAlignment.Left,
             Background = new SolidColorBrush(Color.FromArgb(255, 143, 122, 102)),
             Margin = new Thickness(0, 0, 10, 0),
@@ -304,7 +304,7 @@ public class Game2048 : IGameClass, IThinker
         var newGameLabel = new Label()
         {
             Text = "New Game",
-            FontSize = 16,
+            FontSize = 18,
             TextColor = Color.White,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
@@ -314,8 +314,8 @@ public class Game2048 : IGameClass, IThinker
         // 撤销按钮
         undoButton = new Button()
         {
-            Width = 100,
-            Height = 50,
+            Width = 120,
+            Height = 55,
             HorizontalAlignment = HorizontalAlignment.Right,
             Background = new SolidColorBrush(Color.FromArgb(255, 143, 122, 102)),
             Parent = buttonPanel
@@ -324,7 +324,7 @@ public class Game2048 : IGameClass, IThinker
         var undoLabel = new Label()
         {
             Text = "Undo",
-            FontSize = 16,
+            FontSize = 18,
             TextColor = Color.White,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center,
@@ -339,7 +339,7 @@ public class Game2048 : IGameClass, IThinker
             TextColor = Color.FromArgb(255, 119, 110, 101),
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Top,
-            Margin = new Thickness(0, 750, 0, 0),
+            Margin = new Thickness(0, 970, 0, 0),
             Parent = gamePanel
         };
 
