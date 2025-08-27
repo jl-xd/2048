@@ -4,6 +4,8 @@
 
 <img width="1386" height="882" alt="image" src="https://github.com/user-attachments/assets/f19777c0-7e43-4c2e-bfd7-2daaec45e684" />
 
+<img width="1386" height="882" alt="image" src="https://github.com/user-attachments/assets/f19777c0-7e43-4c2e-bfd7-2daaec45e684" />
+
 
 ## 🎮 游戏特色
 
@@ -41,6 +43,7 @@
 ## 🏗️ 项目结构
 
 ```
+2048/
 2048/
 ├── GameEntry/
 │   ├── Game2048/
@@ -162,6 +165,7 @@ private const float MERGE_ANIMATION_SPEED = 12f; // 合并动画速度
 本项目基于WasiCore框架开发，遵循相应的开源协议。
 
 ---
+
 
 
 🎮 **享受2048游戏的乐趣！挑战更高分数！** 🎮
