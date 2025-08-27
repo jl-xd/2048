@@ -2,7 +2,9 @@
 
 一个基于WasiCore框架开发的现代化2048游戏，支持WebAssembly运行环境，具有精美的视觉效果和流畅的动画。
 
-![2048游戏截图](screenshot.png)
+<img width="1386" height="882" alt="image" src="https://github.com/user-attachments/assets/f19777c0-7e43-4c2e-bfd7-2daaec45e684" />
+
+
 
 ## 🎮 游戏特色
 
@@ -161,5 +163,6 @@ private const float MERGE_ANIMATION_SPEED = 12f; // 合并动画速度
 本项目基于WasiCore框架开发，遵循相应的开源协议。
 
 ---
+
 
 🎮 **享受2048游戏的乐趣！挑战更高分数！** 🎮
