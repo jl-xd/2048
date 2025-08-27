@@ -9,7 +9,4 @@ table/FloatingTextTemplate.json
 bin
 GameEntry/Obj
 *.pdb
-AppBundle
-ui/AppBundle
-/GameEntry/Image/MyBird.png
-tmp/
+docs

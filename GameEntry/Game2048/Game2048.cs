@@ -37,21 +37,20 @@ public class Game2048 : IGameClass, IThinker
     // 游戏状态
     private int[,] grid = new int[GRID_SIZE, GRID_SIZE];
     private int[,] previousGrid = new int[GRID_SIZE, GRID_SIZE];
-    private int score = 0;
-    private int bestScore = 0;
-    private int previousScore = 0;
-    private bool isGameOver = false;
-    private bool hasWon = false;
-    private bool isAnimating = false;
+    private int score;
+    private int bestScore;
+    private int previousScore;
+    private bool isGameOver;
+    private bool hasWon;
+    private bool isAnimating;
 
     // 动画相关
     private readonly List<TileAnimation> animations = [];
     private readonly List<MergeAnimation> mergeAnimations = [];
     private readonly List<Particle> particles = [];
-    private float pulseTimer = 0f;
-    private float animationTimeoutCounter = 0f;
-    private float delayedActionTimer = 0f;
-    private Action? delayedAction = null;
+    private float animationTimeoutCounter;
+    private float delayedActionTimer;
+    private Action? delayedAction;
     
     // 触发器引用 - 防止被GC回收
     private Trigger<EventGameKeyDown>? keyDownTrigger;
@@ -60,7 +59,7 @@ public class Game2048 : IGameClass, IThinker
     private float gameWidth = 800f;
     private float gameHeight = 1000f;
     private float gridStartX = 80f;
-    private float gridStartY = 280f;
+    private float gridStartY = 300f;
 
     // 颜色主题 - 现代扁平化设计
     private readonly Dictionary<int, Color> tileColors = new()
@@ -132,7 +131,6 @@ public class Game2048 : IGameClass, IThinker
 
     public static void OnRegisterGameClass()
     {
-        Game.Logger.LogInformation("2048 game registered");
         Game.OnGameTriggerInitialization += RegisterAll;
     }
 
@@ -146,7 +144,6 @@ public class Game2048 : IGameClass, IThinker
 
         Trigger<EventGameStart> trigger = new(async (s, d) =>
         {
-            Game.Logger.LogInformation("2048 game started");
             var game = new Game2048();
             game.Initialize();
             return true;
@@ -156,7 +153,6 @@ public class Game2048 : IGameClass, IThinker
 
     private void Initialize()
     {
-        Game.Logger.LogInformation("Initializing 2048 game");
 
         // 获取视口尺寸
         var viewportSize = GameUI.Device.ScreenViewport.Primary.Size;
@@ -166,7 +162,6 @@ public class Game2048 : IGameClass, IThinker
         // 计算游戏区域位置 - 确保居中且留足够空间给UI
         var gridTotalSize = GRID_SIZE * TILE_SIZE + (GRID_SIZE - 1) * TILE_PADDING;
         gridStartX = (gameWidth - gridTotalSize) / 2;
-        gridStartY = 280f; // 固定位置，为标题和分数留足空间
 
         CreateUI();
         SetupEventHandlers();
@@ -436,7 +431,6 @@ public class Game2048 : IGameClass, IThinker
         UpdateParticles(deltaTime);
         UpdateDelayedActions(deltaTime);
         
-        pulseTimer += deltaTime;
         DrawGame();
         
         // 确保思考器保持激活状态
@@ -691,12 +685,14 @@ public class Game2048 : IGameClass, IThinker
         if (moved)
         {
             isAnimating = true;
-            // 延迟添加新方块，等动画完成
-            _ = Game.Delay(TimeSpan.FromSeconds(0.3)).ContinueWith(_ => {
+            
+            // 使用定时器而不是异步延迟，确保可靠性
+            delayedActionTimer = 0.3f;
+            delayedAction = () => {
                 AddRandomTile();
                 CheckGameOver();
                 UpdateUI();
-            });
+            };
         }
     }
 
@@ -1383,71 +1379,12 @@ public class Game2048 : IGameClass, IThinker
         delayedActionTimer = 0f;
         delayedAction = null;
         
-        // 重新注册键盘触发器（防止被GC回收）
-        ReregisterKeyboardTrigger();
+        // 键盘触发器已通过实例字段防止GC回收
         
         // 确保思考器激活
         (this as IThinker).DoesThink = true;
         
         Game.Logger.LogInformation("Emergency reset completed - Game should be responsive now");
-    }
-    
-    private void ReregisterKeyboardTrigger()
-    {
-        try
-        {
-            // 如果旧的触发器存在，先注销
-            keyDownTrigger?.Unregister(Game.Instance);
-            
-            // 重新创建并注册触发器
-            keyDownTrigger = new(async (s, d) =>
-            {
-                
-                if (isAnimating) 
-                {
-                    return true;
-                }
-
-                switch (d.Key)
-                {
-                    case GameCore.Platform.SDL.VirtualKey.Up:
-                    case GameCore.Platform.SDL.VirtualKey.W:
-                        MoveUp();
-                        break;
-                    case GameCore.Platform.SDL.VirtualKey.Down:
-                    case GameCore.Platform.SDL.VirtualKey.S:
-                        MoveDown();
-                        break;
-                    case GameCore.Platform.SDL.VirtualKey.Left:
-                    case GameCore.Platform.SDL.VirtualKey.A:
-                        MoveLeft();
-                        break;
-                    case GameCore.Platform.SDL.VirtualKey.Right:
-                    case GameCore.Platform.SDL.VirtualKey.D:
-                        MoveRight();
-                        break;
-                    case GameCore.Platform.SDL.VirtualKey.R:
-                        StartNewGame();
-                        break;
-                    case GameCore.Platform.SDL.VirtualKey.U:
-                        UndoMove();
-                        break;
-                    case GameCore.Platform.SDL.VirtualKey.Escape:
-                        EmergencyReset();
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            });
-            
-            keyDownTrigger.Register(Game.Instance);
-            Game.Logger.LogInformation("Keyboard trigger re-registered successfully");
-        }
-        catch (Exception ex)
-        {
-            Game.Logger.LogError(ex, "Failed to re-register keyboard trigger");
-        }
     }
 }
 
