@@ -29,6 +29,10 @@
 		<DefineConstants>$(DefineConstants);CLIENT;RELESE</DefineConstants>
 	</PropertyGroup>
 
+	<PropertyGroup>
+  		<WarningLevel>0</WarningLevel>
+	</PropertyGroup>
+
 	<!-- Analyzers -->
 	<ItemGroup>
 		<Analyzer Include="$(WasiSparkCorePath)EditorTools\CodeGenerator.dll" />

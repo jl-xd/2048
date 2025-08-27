@@ -49,6 +49,12 @@ public class Game2048 : IGameClass, IThinker
     private readonly List<MergeAnimation> mergeAnimations = [];
     private readonly List<Particle> particles = [];
     private float pulseTimer = 0f;
+    private float animationTimeoutCounter = 0f;
+    private float delayedActionTimer = 0f;
+    private Action? delayedAction = null;
+    
+    // 触发器引用 - 防止被GC回收
+    private Trigger<EventGameKeyDown>? keyDownTrigger;
 
     // 游戏视觉参数
     private float gameWidth = 600f;
@@ -328,7 +334,7 @@ public class Game2048 : IGameClass, IThinker
         // 游戏说明
         var instructionLabel = new Label()
         {
-            Text = "使用 WASD 或方向键移动，合并相同数字！",
+            Text = "WASD/方向键移动，R重开，U撤销，ESC紧急重置",
             FontSize = 16,
             TextColor = Color.FromArgb(255, 119, 110, 101),
             HorizontalAlignment = HorizontalAlignment.Center,
@@ -371,8 +377,8 @@ public class Game2048 : IGameClass, IThinker
         newGameButton!.OnPointerPressed += OnNewGameClicked;
         undoButton!.OnPointerPressed += OnUndoClicked;
 
-        // 键盘事件
-        Trigger<EventGameKeyDown> keyDownTrigger = new(async (s, d) =>
+        // 键盘事件 - 保存为实例字段防止GC
+        keyDownTrigger = new(async (s, d) =>
         {
             if (isAnimating) return true;
 
@@ -400,6 +406,10 @@ public class Game2048 : IGameClass, IThinker
                 case GameCore.Platform.SDL.VirtualKey.U:
                     UndoMove();
                     break;
+                case GameCore.Platform.SDL.VirtualKey.Escape:
+                    Game.Logger.LogWarning("Emergency reset triggered");
+                    EmergencyReset();
+                    break;
             }
             return true;
         });
@@ -420,10 +430,41 @@ public class Game2048 : IGameClass, IThinker
 
     public void Think(int deltaInMs)
     {
-        UpdateAnimations(deltaInMs / 1000f);
-        UpdateParticles(deltaInMs / 1000f);
-        pulseTimer += deltaInMs / 1000f;
+        var deltaTime = deltaInMs / 1000f;
+        
+        UpdateAnimations(deltaTime);
+        UpdateParticles(deltaTime);
+        UpdateDelayedActions(deltaTime);
+        
+        pulseTimer += deltaTime;
         DrawGame();
+        
+        // 确保思考器保持激活状态
+        (this as IThinker).DoesThink = true;
+    }
+    
+    private void UpdateDelayedActions(float deltaTime)
+    {
+        if (delayedActionTimer > 0f)
+        {
+            delayedActionTimer -= deltaTime;
+            
+            if (delayedActionTimer <= 0f)
+            {
+                
+                try
+                {
+                    delayedAction?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    Game.Logger.LogError(ex, "Error executing delayed action");
+                }
+                
+                delayedAction = null;
+                delayedActionTimer = 0f;
+            }
+        }
     }
 
     private void UpdateAnimations(float deltaTime)
@@ -466,6 +507,24 @@ public class Game2048 : IGameClass, IThinker
 
         // 检查动画是否完成
         isAnimating = animations.Count > 0 || mergeAnimations.Count > 0;
+        
+        // 安全检查：如果动画状态卡住超过5秒，强制重置
+        if (isAnimating)
+        {
+            animationTimeoutCounter += deltaTime;
+            if (animationTimeoutCounter > 5f)
+            {
+                Game.Logger.LogWarning("Animation timeout detected, forcing reset");
+                animations.Clear();
+                mergeAnimations.Clear();
+                isAnimating = false;
+                animationTimeoutCounter = 0f;
+            }
+        }
+        else
+        {
+            animationTimeoutCounter = 0f;
+        }
     }
 
     private void UpdateParticles(float deltaTime)
@@ -508,7 +567,6 @@ public class Game2048 : IGameClass, IThinker
         gameOverLabel!.Visible = false;
         winLabel!.Visible = false;
 
-        Game.Logger.LogInformation("New 2048 game started");
     }
 
     private void AddRandomTile()
@@ -549,7 +607,6 @@ public class Game2048 : IGameClass, IThinker
         score = previousScore;
         UpdateUI();
         
-        Game.Logger.LogInformation("Move undone");
     }
 
     // 移动逻辑
@@ -718,11 +775,15 @@ public class Game2048 : IGameClass, IThinker
         if (moved)
         {
             isAnimating = true;
-            _ = Game.Delay(TimeSpan.FromSeconds(0.3)).ContinueWith(_ => {
+            
+            // 使用定时器而不是异步延迟，确保可靠性
+            delayedActionTimer = 0.3f;
+            delayedAction = () => {
                 AddRandomTile();
                 CheckGameOver();
                 UpdateUI();
-            });
+            };
+            
         }
     }
 
@@ -801,11 +862,15 @@ public class Game2048 : IGameClass, IThinker
         if (moved)
         {
             isAnimating = true;
-            _ = Game.Delay(TimeSpan.FromSeconds(0.3)).ContinueWith(_ => {
+            
+            // 使用定时器而不是异步延迟，确保可靠性
+            delayedActionTimer = 0.3f;
+            delayedAction = () => {
                 AddRandomTile();
                 CheckGameOver();
                 UpdateUI();
-            });
+            };
+            
         }
     }
 
@@ -884,11 +949,15 @@ public class Game2048 : IGameClass, IThinker
         if (moved)
         {
             isAnimating = true;
-            _ = Game.Delay(TimeSpan.FromSeconds(0.3)).ContinueWith(_ => {
+            
+            // 使用定时器而不是异步延迟，确保可靠性
+            delayedActionTimer = 0.3f;
+            delayedAction = () => {
                 AddRandomTile();
                 CheckGameOver();
                 UpdateUI();
-            });
+            };
+            
         }
     }
 
@@ -928,12 +997,12 @@ public class Game2048 : IGameClass, IThinker
     private void ShowWin()
     {
         winLabel!.Visible = true;
-        Game.Logger.LogInformation("Player won with 2048! Score: {score}", score);
         
         // 3秒后自动隐藏胜利提示
-        _ = Game.Delay(TimeSpan.FromSeconds(3)).ContinueWith(_ => {
+        delayedActionTimer = 3f;
+        delayedAction = () => {
             winLabel!.Visible = false;
-        });
+        };
     }
 
     private void CreateSpawnParticles(float centerX, float centerY)
@@ -1151,7 +1220,7 @@ public class Game2048 : IGameClass, IThinker
 
         var segmentThickness = Math.Max(2f, width * 0.15f);
         
-        // 简化的7段数码管显示
+        // 完整的7段数码管显示
         switch (digit)
         {
             case 0:
@@ -1173,10 +1242,37 @@ public class Game2048 : IGameClass, IThinker
                 DrawVerticalSegment(x, y + height / 2, height / 2, segmentThickness); // 左下
                 DrawHorizontalSegment(x, y + height - segmentThickness, width, segmentThickness); // 底部
                 break;
+            case 3:
+                DrawHorizontalSegment(x, y, width, segmentThickness); // 顶部
+                DrawVerticalSegment(x + width - segmentThickness, y, height / 2, segmentThickness); // 右上
+                DrawHorizontalSegment(x, y + height / 2 - segmentThickness / 2, width, segmentThickness); // 中间
+                DrawVerticalSegment(x + width - segmentThickness, y + height / 2, height / 2, segmentThickness); // 右下
+                DrawHorizontalSegment(x, y + height - segmentThickness, width, segmentThickness); // 底部
+                break;
             case 4:
                 DrawVerticalSegment(x, y, height / 2, segmentThickness); // 左上
                 DrawVerticalSegment(x + width - segmentThickness, y, height / 2, segmentThickness); // 右上
                 DrawHorizontalSegment(x, y + height / 2 - segmentThickness / 2, width, segmentThickness); // 中间
+                DrawVerticalSegment(x + width - segmentThickness, y + height / 2, height / 2, segmentThickness); // 右下
+                break;
+            case 5:
+                DrawHorizontalSegment(x, y, width, segmentThickness); // 顶部
+                DrawVerticalSegment(x, y, height / 2, segmentThickness); // 左上
+                DrawHorizontalSegment(x, y + height / 2 - segmentThickness / 2, width, segmentThickness); // 中间
+                DrawVerticalSegment(x + width - segmentThickness, y + height / 2, height / 2, segmentThickness); // 右下
+                DrawHorizontalSegment(x, y + height - segmentThickness, width, segmentThickness); // 底部
+                break;
+            case 6:
+                DrawHorizontalSegment(x, y, width, segmentThickness); // 顶部
+                DrawVerticalSegment(x, y, height / 2, segmentThickness); // 左上
+                DrawHorizontalSegment(x, y + height / 2 - segmentThickness / 2, width, segmentThickness); // 中间
+                DrawVerticalSegment(x, y + height / 2, height / 2, segmentThickness); // 左下
+                DrawVerticalSegment(x + width - segmentThickness, y + height / 2, height / 2, segmentThickness); // 右下
+                DrawHorizontalSegment(x, y + height - segmentThickness, width, segmentThickness); // 底部
+                break;
+            case 7:
+                DrawHorizontalSegment(x, y, width, segmentThickness); // 顶部
+                DrawVerticalSegment(x + width - segmentThickness, y, height / 2, segmentThickness); // 右上
                 DrawVerticalSegment(x + width - segmentThickness, y + height / 2, height / 2, segmentThickness); // 右下
                 break;
             case 8:
@@ -1188,10 +1284,17 @@ public class Game2048 : IGameClass, IThinker
                 DrawVerticalSegment(x + width - segmentThickness, y + height / 2, height / 2, segmentThickness); // 右下
                 DrawHorizontalSegment(x, y + height - segmentThickness, width, segmentThickness); // 底部
                 break;
-            // 其他数字可以继续添加...
+            case 9:
+                DrawHorizontalSegment(x, y, width, segmentThickness); // 顶部
+                DrawVerticalSegment(x, y, height / 2, segmentThickness); // 左上
+                DrawVerticalSegment(x + width - segmentThickness, y, height / 2, segmentThickness); // 右上
+                DrawHorizontalSegment(x, y + height / 2 - segmentThickness / 2, width, segmentThickness); // 中间
+                DrawVerticalSegment(x + width - segmentThickness, y + height / 2, height / 2, segmentThickness); // 右下
+                DrawHorizontalSegment(x, y + height - segmentThickness, width, segmentThickness); // 底部
+                break;
             default:
-                // 默认显示一个矩形
-                gameCanvas.FillRectangle(x, y, width, height);
+                // 简化显示，用填充矩形
+                gameCanvas.FillRectangle(x + width * 0.1f, y + height * 0.1f, width * 0.8f, height * 0.8f);
                 break;
         }
     }
@@ -1263,6 +1366,88 @@ public class Game2048 : IGameClass, IThinker
     private void OnUndoClicked(object? sender, PointerEventArgs e)
     {
         UndoMove();
+    }
+    
+    private void EmergencyReset()
+    {
+        Game.Logger.LogWarning("EMERGENCY RESET - Clearing all animations and states");
+        
+        // 强制清除所有动画
+        animations.Clear();
+        mergeAnimations.Clear();
+        particles.Clear();
+        
+        // 重置所有状态
+        isAnimating = false;
+        animationTimeoutCounter = 0f;
+        delayedActionTimer = 0f;
+        delayedAction = null;
+        
+        // 重新注册键盘触发器（防止被GC回收）
+        ReregisterKeyboardTrigger();
+        
+        // 确保思考器激活
+        (this as IThinker).DoesThink = true;
+        
+        Game.Logger.LogInformation("Emergency reset completed - Game should be responsive now");
+    }
+    
+    private void ReregisterKeyboardTrigger()
+    {
+        try
+        {
+            // 如果旧的触发器存在，先注销
+            keyDownTrigger?.Unregister(Game.Instance);
+            
+            // 重新创建并注册触发器
+            keyDownTrigger = new(async (s, d) =>
+            {
+                
+                if (isAnimating) 
+                {
+                    return true;
+                }
+
+                switch (d.Key)
+                {
+                    case GameCore.Platform.SDL.VirtualKey.Up:
+                    case GameCore.Platform.SDL.VirtualKey.W:
+                        MoveUp();
+                        break;
+                    case GameCore.Platform.SDL.VirtualKey.Down:
+                    case GameCore.Platform.SDL.VirtualKey.S:
+                        MoveDown();
+                        break;
+                    case GameCore.Platform.SDL.VirtualKey.Left:
+                    case GameCore.Platform.SDL.VirtualKey.A:
+                        MoveLeft();
+                        break;
+                    case GameCore.Platform.SDL.VirtualKey.Right:
+                    case GameCore.Platform.SDL.VirtualKey.D:
+                        MoveRight();
+                        break;
+                    case GameCore.Platform.SDL.VirtualKey.R:
+                        StartNewGame();
+                        break;
+                    case GameCore.Platform.SDL.VirtualKey.U:
+                        UndoMove();
+                        break;
+                    case GameCore.Platform.SDL.VirtualKey.Escape:
+                        EmergencyReset();
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            });
+            
+            keyDownTrigger.Register(Game.Instance);
+            Game.Logger.LogInformation("Keyboard trigger re-registered successfully");
+        }
+        catch (Exception ex)
+        {
+            Game.Logger.LogError(ex, "Failed to re-register keyboard trigger");
+        }
     }
 }
 

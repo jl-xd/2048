@@ -58,6 +58,9 @@ public class FlappyBird : IGameClass, IThinker
     private readonly List<Particle> jumpParticles = []; // 跳跃粒子
     private float sunRotation = 0f; // 太阳旋转角度
     
+    // 防止GC回收的触发器引用
+    private Trigger<EventGameKeyDown>? keyDownTrigger;
+    
     // 粒子类
     private class Particle
     {
@@ -179,7 +182,7 @@ public class FlappyBird : IGameClass, IThinker
         restartButton.OnPointerPressed += OnRestartClicked;
 
         // 监听键盘事件
-        Trigger<EventGameKeyDown> keyDownTrigger = new(async (s, d) =>
+        keyDownTrigger = new(async (s, d) =>
         {
             if (d.Key == GameCore.Platform.SDL.VirtualKey.Space)
             {
@@ -746,6 +749,13 @@ public class FlappyBird : IGameClass, IThinker
     private void OnRestartClicked(object? sender, PointerEventArgs e)
     {
         StartGame();
+    }
+    
+    // 清理资源，防止内存泄漏
+    public void Dispose()
+    {
+        keyDownTrigger?.Unregister(Game.Instance);
+        keyDownTrigger = null;
     }
 }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
