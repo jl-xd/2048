@@ -5,7 +5,6 @@
 <img width="1386" height="882" alt="image" src="https://github.com/user-attachments/assets/f19777c0-7e43-4c2e-bfd7-2daaec45e684" />
 
 
-
 ## 🎮 游戏特色
 
 ### ✨ 视觉效果
@@ -42,7 +41,7 @@
 ## 🏗️ 项目结构
 
 ```
-WasiTestMap-5/
+2048/
 ├── GameEntry/
 │   ├── Game2048/
 │   │   └── Game2048.cs              # 2048游戏主要实现
@@ -166,3 +165,4 @@ private const float MERGE_ANIMATION_SPEED = 12f; // 合并动画速度
 
 
 🎮 **享受2048游戏的乐趣！挑战更高分数！** 🎮
+
